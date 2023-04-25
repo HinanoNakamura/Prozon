@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.domain.Product;
 import com.example.backend.domain.Testes;
+import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.TestRepository;
 import com.example.backend.repository.TestRepositorySpecifications;
 
@@ -15,6 +17,8 @@ import com.example.backend.repository.TestRepositorySpecifications;
 public class TestService {
     @Autowired
     private TestRepository testRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public Testes getTestes(Integer id){
         Optional<Testes> testesOptional =testRepository.findById(id);
@@ -51,5 +55,19 @@ public class TestService {
     public List<Testes> findAllEntities() {
         return testRepository.findAllRandom();
     }
+
+    public Boolean addToFavorites(Integer Userid, Integer Proteinid) {
+        Product vv = new Product();
+        vv.setUserid(Userid);
+        vv.setProteinid(Proteinid);
+        productRepository.save(vv);
+        return true;
+    }
+
+    public Boolean addToFavorites2(Integer Userid, Integer Proteinid) {
+        productRepository.deleteById(productRepository.findByUseridAndProteinid(Userid,Proteinid).getFavoriteid());
+        return true;
+    }
+
 }
 

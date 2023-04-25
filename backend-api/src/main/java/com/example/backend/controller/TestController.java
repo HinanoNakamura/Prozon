@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.domain.Product;
 import com.example.backend.domain.Testes;
 
 import com.example.backend.service.TestService;
@@ -85,7 +85,7 @@ class TestController{
     }
 
     @PostMapping(path="/api/flavors")
-public ResponseEntity<String> receiveFlavors(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<String> receiveFlavors(@RequestBody Map<String, Object> requestBody) {
     List<Integer> selectedFlavors = (List<Integer>) requestBody.get("flavors");
     List<Integer> selectedPurposes = (List<Integer>) requestBody.get("purposes");
     List<Integer> selectedComponents = (List<Integer>) requestBody.get("components");
@@ -122,5 +122,19 @@ public ResponseEntity<String> receiveFlavors(@RequestBody Map<String, Object> re
     public List<Testes> users(){
         return testService.findAllEntities();
     }
+
+    @PostMapping(path ="/api/addToFavorites")
+    public boolean postMethodName(@RequestBody Product product) {
+
+        return testService.addToFavorites(product.getUserid(),product.getProteinid());
+    }
+
+    @PostMapping(path ="/api/addToFavorites2")
+    public boolean postMethodName2(@RequestBody Product product) {
+
+        return testService.addToFavorites(product.getUserid(),product.getProteinid());
+    }
+    
+    
 
 }

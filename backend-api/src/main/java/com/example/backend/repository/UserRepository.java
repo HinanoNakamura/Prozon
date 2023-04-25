@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.example.backend.domain.Users;
 
-public interface UserRepository extends JpaRepository<Users, Integer>,JpaSpecificationExecutor<Users>{
-    
+public interface UserRepository extends JpaRepository<Users, String>,JpaSpecificationExecutor<Users>{
+   
 }
