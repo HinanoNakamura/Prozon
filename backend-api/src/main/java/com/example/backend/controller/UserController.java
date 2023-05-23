@@ -156,7 +156,7 @@ class UserController {
             @RequestParam("id") String id,
             @RequestParam("icon") MultipartFile profileImageFile
     ) throws IOException {
-        System.out.println("ぼえ"+profileImageFile+"きた");
+        System.out.println("ぼえa"+profileImageFile+"きた");
         Optional<Users> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             Users existingUser = userOptional.get();
