@@ -7,7 +7,7 @@
           <div class="testes-wrapper">
             
 
-            <p>宮澤おすすめプロテイン      稲垣      中村</p>
+            <p>宮澤おすすめプロテイン   gg   稲垣      中村</p>
               
             <div class="back-home">
               <button class="button-74" v-if="$route.path !== '/'" @click="$router.push('/')">Home</button>
