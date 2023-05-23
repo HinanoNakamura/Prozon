@@ -60,7 +60,7 @@ mvn spring-boot:run
 1.frontendプロジェクトのpackage.jsonがあるディレクトリに移動
 2.以下のコマンドを実行
 ,,,
-npm install(初回のみ)
+npm install
 npm run serve
 ,,,
 
@@ -68,7 +68,7 @@ npm run serve
 ## MySQL
 1.docker ps
 2.docker exec -it <コンテナID> /bin/bash
-docker exec -it 11d063a892a1 /bin/bash
+docker exec -it 7ca793a0e926 /bin/bash
 
 3.mysql -h localhost -P 3306 -u test -p
 4.これでmysqlに入れる

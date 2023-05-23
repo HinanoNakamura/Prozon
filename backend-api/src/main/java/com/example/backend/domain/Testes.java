@@ -37,6 +37,9 @@ public class Testes extends GenericDomain{
     @Column(name = "img")
     private String img;
 
+    @Column(name = "detail")
+    private String detail;
+
     @Override
     protected Object keyObject() {
         return getId();

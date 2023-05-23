@@ -22,6 +22,16 @@ public class Users extends GenericDomain{
     @Column(name = "icon")
     private String icon;
 
+    @Column(name = "mail")
+    private String mail;
+
+    @Column(name = "homenumber")
+    private String homenumber;
+
+    @Column(name = "homeaddress")
+    private String homeaddress;
+
+
     @Override
     protected Object keyObject() {
         return getId();
