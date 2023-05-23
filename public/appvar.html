@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+  <div id="app5"></div>
+
+  <div>
+      <router-link v-if="false" to="/">Home</router-link>
+      <router-view></router-view>
+    </div>
+
+    <div class="unko">
+      <img src="./assets/unnko.jpg" alt="画像">
+    </div>
+
+    <div class="flavor-selector2">
+
+      <router-link to="/search-results" class="search-link">
+        <img src="./assets/image.png" alt="検索アイコン" class="search-icon">
+      </router-link>
+
+
+      <router-link v-if="!loggin" to="/login">Login</router-link>
+      <router-link v-else to="/page">MyPage</router-link>
+      <router-link v-if="loggin" to="/favorites">Favorite</router-link>
+      <router-link v-else to="login">MyPage</router-link>
+    </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
