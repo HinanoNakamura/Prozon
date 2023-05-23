@@ -57,7 +57,7 @@ class TestController {
         List<Integer> selectedComponents = (List<Integer>) requestBody.get("components");
         List<Integer> selectedPrices = (List<Integer>) requestBody.get("prices");
 
-        System.out.println("これは味コードだよ");
+        System.out.println("これは味コードだよ!");
         selectedFlavors.forEach(System.out::println);
 
         System.out.println("これは目的コードだよ");
