@@ -8,14 +8,16 @@ export default new Vuex.Store({
   state: {
     userId: '',
     loggin: false,
-    cartItems: [],
+    cart: [],
     flavorCode:'',
     id:'',
     detailId:'',
+    count:'',
+
   },
   plugins: [createPersistedState(
     {paths :[
-    'userId','flavorCode','id']}
+    'userId','flavorCode','id','count','cart',' detailId']}
   )],
   actions: {
     setUserid(context, value) {
@@ -74,6 +76,33 @@ export default new Vuex.Store({
     },
     setId(state,id){
       state.id =id
+    },
+    saveCart(state, cart) {
+
+  
+    
+      const item = state.cart.find(item => item.cartname === cart.cartname);
+
+      if (item) {
+        const value = Number(cart.cartquantity)
+        console.log("通信成功" + item.cartquantity)
+       
+         item.cartquantity = value + Number(item.cartquantity);
+      }else{
+        console.log("通信失敗")
+        state.cart.unshift(cart)
+        cart.id = ++state.count
+      }
+    },
+    delete(state, cartId) {
+      state.cart = state.cart.filter(cart => cart.id !== cartId)
+    },
+    refreshquantity(state,sub){
+      console.log("おっぱっぴー" + sub.value + sub.name)
+      const item = state.cart.findIndex(item => item.cartname === sub.name);
+      if (item !== -1) {
+         state.cart[item].cartquantity = sub.value
+      }
     }
     
   },

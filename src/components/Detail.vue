@@ -9,9 +9,10 @@
                         <span style="display:none">{{ item.id }}</span>
                         <span style="font-size: 25px;">{{ item.name }}</span>
                         <br>
-                        <img :src="'./assets' + item.img" style="width: 300px; height: 300px; display: block; margin: 0 auto;" />
+                        <img :src="'./assets' + item.img"
+                            style="width: 300px; height: 300px; display: block; margin: 0 auto;" />
                         <br>
-                        ¥{{ item.price .toLocaleString()}}
+                        ¥{{ item.price.toLocaleString() }}
                         <br>
                         {{ item.detail }}
                     </ul>
@@ -39,42 +40,42 @@
                 <span class="favorite-icon">♡</span>
                 <span class="button-text">Favorites</span>
             </button>
-            <button class="button-53"  @click="addToCart(items, quantity)">
+            <button class="button-53" @click="saveCart()">
                 <span class="favorite-icon"><i class="fas fa-shopping-cart"></i></span>
                 <span class="button-text">Cart</span>
             </button>
 
             <router-view></router-view>
         </div>
-    <br>
-    <h1>Also recommended</h1>
-    <div class="flexbox">
+        <br>
+        <h1>Also recommended</h1>
+        <div class="flexbox">
 
-      <div class="flexitem" v-for="fav in favs" :key="fav.id">
-        <div class="image-container" style="width: 200px; height: 180px; margin-left: 50px;">
-          <ul>
-            <li>
-              {{ fav.name }}
-              <br>
-              ¥{{ fav.price.toLocaleString() }}
-           
-  <img :src="'./assets' + fav.img" alt="Image" style="width: 160px; height: 160px;" @click="MoreDetail(fav.id)"/>
+            <div class="flexitem" v-for="fav in favs" :key="fav.id">
+                <div class="image-container" style="width: 200px; height: 180px; margin-left: 50px;">
+                    <ul>
+                        <li>
+                            {{ fav.name }}
+                            <br>
+                            ¥{{ fav.price.toLocaleString() }}
+
+                            <img :src="'./assets' + fav.img" alt="Image" style="width: 160px; height: 160px;"
+                                @click="MoreDetail(fav.id)" />
 
 
-              <!-- <img :src="'./assets' + fav.img" alt="Image" style="width: 160px; height: 160px;" />
+                            <!-- <img :src="'./assets' + fav.img" alt="Image" style="width: 160px; height: 160px;" />
               <h2><router-link :to="{name:'detail',params:{ id: testes.id}}" class="button-74">Detail</router-link></h2> -->
-            </li>
-          </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <br><br><br>
+        <br><br><br>
         <div class="back-home">
             <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
             <router-view></router-view>
         </div>
-        <!-- </div> -->
-
+       
     </div>
 </template>
   
@@ -90,8 +91,8 @@ export default {
 
     name: "DetailPage",
     components: {
-    PopupWindow
-  },
+        PopupWindow
+    },
     props: {
         title: String,
         image: String,
@@ -109,28 +110,34 @@ export default {
             favId0: {},
             favId1: {},
             favId2: {},
-            moreid: store.state.id
+            moreid: store.state.id,
+            cartname: '',
+            cartprice: '',
+            cartimg: ''
         }
     },
     mounted() {
-    Service.get('/detail/' + this.moreid).then(response => {
-      this.items = response.data
-      this.flavor = this.items[0].flavorcode
-      // this.setFlavorCode(this.flavor)
-      store.commit('setFlavorCode', response.data[0].flavorcode)
-      // alert(store.state.flavorCode)
+        Service.get('/detail/' + this.moreid).then(response => {
+            this.items = response.data
+            this.flavor = this.items[0].flavorcode
+            // this.setFlavorCode(this.flavor)
+            store.commit('setFlavorCode', response.data[0].flavorcode)
+            // alert(store.state.flavorCode)
+            this.cartname = this.items[0].name
+            this.cartprice = this.items[0].price
+            this.cartimg = this.items[0].img
+            store.commit('setDetailId', this.moreid)
 
-      store.commit('setDetailId', this.moreid)
-      Service.get('/fav/' + store.state.flavorCode + '/' + this.moreid).then(response => {
-        this.favs = response.data;
-        this.favId0 = response.data[0].id
-        this.favId1 = response.data[1].id
-        this.favId2 = response.data[2].id
-        // alert(11111 + "/" + this.favs[1].id )
-      });
-    });
-    console.log(store.state.flavorCode)
-  },
+            Service.get('/fav/' + store.state.flavorCode + '/' + this.moreid).then(response => {
+                this.favs = response.data;
+                this.favId0 = response.data[0].id
+                this.favId1 = response.data[1].id
+                this.favId2 = response.data[2].id
+                // alert(11111 + "/" + this.favs[1].id )
+            });
+        });
+        console.log(store.state.flavorCode)
+    },
     methods: {
         Favorites(event) {
             event.preventDefault();
@@ -144,43 +151,53 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
-                    alert(this.userid + this.id+"ひ")
+                    alert(this.userid + this.id + "ひ")
                 });
         },
         goBack() {
             window.history.back();
         },
-        addToCart(items, quantity) {
-      alert(items + 'あ' + quantity)
-      store.dispatch('addToCart', { item: items, quantity: quantity });
-      console.log('い' + store.state.cartItems)
-    }, 
-    MoreDetail(itemId) {
-      if (itemId == this.favId0) {
-        store.commit('setDetailId', this.favId0)
-        store.commit('setId', this.favId0)
-      } if (itemId == this.favId1) {
-        store.commit('setDetailId', this.favId1)
-        store.commit('setId', this.favId1)
-      } if (itemId == this.favId2) {
-        store.commit('setDetailId', this.favId2)
-        store.commit('setId', this.favId2)
-      }
-      this.$router.go({ path: this.$router.currentRoute.path, force: true })
+        // addToCart(items, quantity) {
+        //     alert(items + 'あ' + quantity)
+        //     store.dispatch('addToCart', { item: items, quantity: quantity });
+        //     console.log('い' + store.state.cartItems)
+        // },
+        MoreDetail(itemId) {
+            if (itemId == this.favId0) {
+                store.commit('setDetailId', this.favId0)
+                store.commit('setId', this.favId0)
+            } if (itemId == this.favId1) {
+                store.commit('setDetailId', this.favId1)
+                store.commit('setId', this.favId1)
+            } if (itemId == this.favId2) {
+                store.commit('setDetailId', this.favId2)
+                store.commit('setId', this.favId2)
+            }
+            this.$router.go({ path: this.$router.currentRoute.path, force: true })
+        },
+        saveCart() {
+            let cart = {
+                cartname: this.cartname,
+                cartprice: this.cartprice,
+                cartimg: this.cartimg,
+                cartquantity: this.quantity
+            }
+            store.commit('saveCart', cart)
+            alert("押したよ❤️")
+        },
+        computed: {
+            total() {
+                if (this.items && this.items.length > 0 && this.quantity) {
+                    const selectedItem = this.items.find(item => item.id === this.$route.params.id);
+                    if (selectedItem && selectedItem.price) {
+                        const totalPrice = selectedItem.price * this.quantity;
+                        return totalPrice.toLocaleString(); // 桁区切りの表示
+                    }
+                }
+                return "0";
+            },
+        },
     }
-    },
-    computed: {
-    total() {
-      if (this.items && this.items.length > 0 && this.quantity) {
-        const selectedItem = this.items.find(item => item.id === this.$route.params.id);
-        if (selectedItem && selectedItem.price) {
-          const totalPrice = selectedItem.price * this.quantity;
-          return totalPrice.toLocaleString(); // 桁区切りの表示
-        }
-      }
-      return "0";
-    },
-  },
 };
 </script>
 

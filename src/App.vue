@@ -13,6 +13,8 @@
       <router-view></router-view>
     </div>
 
+   
+
     <div class="unko">
   <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
 </div>
@@ -20,6 +22,10 @@
     <div class="flavor-selector2">
       <router-link to="/search-results" class="search-link">
         <img src="./assets/image.png" alt="検索アイコン" class="search-icon">
+      </router-link>
+      
+ <router-link to="/cart" class="cart-link">
+        <img src="./assets/cart.png" alt="カートアイコン" class="cart-icon" style="width: 47px; height: 47px;">
       </router-link>
 
       <router-link v-if="!loggin" to="/login">Login</router-link>
