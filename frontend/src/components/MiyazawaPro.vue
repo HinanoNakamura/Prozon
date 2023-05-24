@@ -3,12 +3,12 @@
     <div style="display: flex; align-items: center; height: 100vh; flex-direction: column;">
       <div style="display: flex; align-items: center;">
         <img src="/assets/miyazawa.png" alt="画像" style="width: 150px; height: 150px;">
-        <h1 style="margin-left: 10px;">Miyazawa<br>recommended Protein</h1>
+        <h1 style="margin-left: 10px;">Miyazawa<br>recommended Protein  tomoko</h1>
       </div>
       <div>
         <div v-for="fav in favs" :key="fav.id">
           <br>
-          <div style="width: 200px; height: 100px; margin-left: 50px;">
+          <div style="width: 200px; height: 180px; margin-left: 50px;">
             {{ fav.name }}
             <br>
             ¥{{ fav.price.toLocaleString() }}
