@@ -162,10 +162,14 @@ class UserController {
             Users existingUser = userOptional.get();
             // 以下、画像の保存処理
             String fileName = profileImageFile.getOriginalFilename();
-            Path dest = Paths.get("/Users/aikainagaki/Desktop/perfect/frontend/public/assets/profileimg/" + fileName);
+
+            LocalDateTime nowDate = LocalDateTime.now();
+            DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            String formatNowDate = dtf3.format(nowDate);
+            Path dest = Paths.get("/Users/aikainagaki/Desktop/perfect/frontend/public/assets/profileimg/" + formatNowDate  + fileName);
             Files.write(dest, profileImageFile.getBytes(), StandardOpenOption.CREATE);
-    
-            String imagePath = "/assets/profileimg/" + fileName;
+            
+            String imagePath = "/assets/profileimg/" + formatNowDate + fileName;
             existingUser.setIcon(imagePath);
             Users updatedUser = userRepository.save(existingUser);
     

@@ -54,7 +54,8 @@ INSERT INTO protain(id,name,flavorcode,purposecode,componentcode,price,pricecode
 (106,'SHAKEBABY(Matcha)',5,1,2,4290,3,'/SHAKEMatcha.png','Carefully ground, dark and mellow matcha flavor'),
 (107,'PETLOVE(Plane)',6,3,2,1200,1,'/PETLOVE.png','For building up your dogs muscles and increasing metabolism!'),
 (108,'Aikona(Plane)',6,3,1,8780,3,'/aikona.png','Contains over 90 nutrients'),
-(109,'Wankotanpaku(Plane)',6,3,1,4399,3,'/wankonotanpaku.png','Additive-free products made only with whey protein, yogurt powder, and rice flour');
+(109,'Wankotanpaku(Plane)',6,3,1,4399,3,'/wankonotanpaku.png','Additive-free products made only with whey protein, yogurt powder, and rice flour'),
+(110,'MYPROTEIN(Plane)',6,2,1,5290,3,'/MYPUROplean.png','High-protein protein with essential amino acids');
 -- (51,'DNS(Cocoa)',1,1,3,2200,2,'/DNS.jpg'),
 -- (52,'DNS(Strawberry)',2,2,3,2200,2,'/DNS.jpg'),
 -- (53,'DNS(Mango)',3,1,3,2200,2,'/DNS.jpg'),
