@@ -191,7 +191,7 @@ export default {
                     const selectedItem = this.items.find(item => item.id === this.$route.params.id);
                     if (selectedItem && selectedItem.price) {
                         const totalPrice = selectedItem.price * this.quantity;
-                        return totalPrice.toLocaleString(); // 桁区切りの表示
+                        return totalPrice.toLocaleString(); // 桁区切りの表示だよ
                     }
                 }
                 return "0";
