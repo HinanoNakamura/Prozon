@@ -10,9 +10,10 @@
 
     <label for="profileimage">Profile Image : </label>
     <img :src="items.icon" alt="Image" style="width: 200px; height: 200px; display: block; margin: 0 auto; border-radius: 50%;">
+
     <br><br><br>
     <label for="profileimage">Change Profile Image : </label>
-      <ModalModal @imageCropped="handleImageCropped"/>
+      <ModalModal ref="hinano" @imageCropped="handleImageCropped"/>
       <!-- <input type="file" id="profileimage" v-on:change="handleProfileImageUpload"> -->
       <br> 
       <img v-if="croppedsrc!== ''" :src="croppedsrc" alt="Cropped Image" style="border-radius: 50%; height: 200px; width: 200px;">
@@ -70,6 +71,18 @@ components: {
       "Content-Type": "multipart/form-data",
     }
   })
+    .then((response) => {
+      // 成功時の処理
+      // 画像を変更した後に、新しい画像を表示するための処理を追加します
+      this.items.icon = response.data.icon;
+      this.croppedsrc = '';
+      this.$refs.hinano.imgSrc = '';
+
+    })
+    .catch((error) => {
+      // エラー時の処理
+      console.log(error);
+    });
 },
 
 handleProfileImageUpload(event) {
