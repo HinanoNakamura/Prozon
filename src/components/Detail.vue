@@ -40,7 +40,7 @@
                 <span class="favorite-icon">♡</span>
                 <span class="button-text">Favorites</span>
             </button>
-            <button class="button-53" @click=" saveCart()">
+            <button class="button-53" @click="saveCart()">
                 <span class="favorite-icon"><i class="fas fa-shopping-cart"></i></span>
                 <span class="button-text">Cart</span>
             </button>
@@ -75,8 +75,7 @@
             <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
             <router-view></router-view>
         </div>
-        <!-- </div> -->
-
+       
     </div>
 </template>
   
@@ -124,9 +123,9 @@ export default {
             // this.setFlavorCode(this.flavor)
             store.commit('setFlavorCode', response.data[0].flavorcode)
             // alert(store.state.flavorCode)
-            this.cartname=this.items[0].name
-      this.cartprice=this.items[0].price
-      this.cartimg= this.items[0].img
+            this.cartname = this.items[0].name
+            this.cartprice = this.items[0].price
+            this.cartimg = this.items[0].img
             store.commit('setDetailId', this.moreid)
 
             Service.get('/fav/' + store.state.flavorCode + '/' + this.moreid).then(response => {
@@ -199,7 +198,7 @@ export default {
             },
         },
     }
-    };
+};
 </script>
 
 <style>
