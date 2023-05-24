@@ -2,7 +2,7 @@
   <div class="Protein recommendations for dogs">
     <div class="font">
       <div class="flexwan">
-        <h1>★Employee recommended protein★</h1>
+        <h1>★Employee recommended</h1>
         <div class="spacer"></div>
         <div class="testesprotein">
           <div class="column">
