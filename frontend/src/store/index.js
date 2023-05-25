@@ -13,11 +13,12 @@ export default new Vuex.Store({
     id:'',
     detailId:'',
     count:'',
+    coupon:[]
 
   },
   plugins: [createPersistedState(
     {paths :[
-    'userId','flavorCode','id','count','cart',' detailId']}
+    'userId','flavorCode','id','count','cart',' detailId','coupon']}
   )],
   actions: {
     setUserid(context, value) {
@@ -103,7 +104,21 @@ export default new Vuex.Store({
       if (item !== -1) {
          state.cart[item].cartquantity = sub.value
       }
-    }
+    },
+    saveCoupon(state,coupon){
+
+      state.coupon=coupon
+      
+      const extra = state.cart.findIndex(extra=> extra.cartname === state.coupon.couponname)
+      if(extra !== -1){
+        const times = 1 - state.coupon.couponnumber/100
+        const mi = state.cart[extra].cartprice * times
+        state.cart[extra].cartprice = mi
+      console.log("母母" +  state.cart[extra].cartprice )
+      }
+ 
+    },
+
     
   },
   getters: {
