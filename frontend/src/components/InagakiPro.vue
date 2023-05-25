@@ -3,7 +3,7 @@
       <div style="display: flex; align-items: center; height: 100vh; flex-direction: column;">
         <div style="display: flex; align-items: center;">
           <img src="/assets/inagaki.png" alt="画像" style="width: 150px; height: 150px;">
-          <h1 style="margin-left: 10px;">Inagaki<br>recommended Protein piyo</h1>
+          <h1 style="margin-left: 10px;">Inagaki<br>recommended Protein riaria</h1>
         </div>
         <div>
           <div v-for="fav in favs" :key="fav.id">

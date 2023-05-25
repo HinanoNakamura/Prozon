@@ -13,6 +13,7 @@
 
 <button @click="remove(item.id)">削除</button>
 <button @click="refreshquantity(item.cartquantity,item.cartname)">個数変更</button>
+<BuyCom :propName="total" /> 
   </li>
  </ul>
     </div>
@@ -20,12 +21,17 @@
   
   <script>
   import store from "../store/";
+  import BuyCom from '@/components/Buy.vue'
   export default {
     name: 'CartVue',
+    components: {
+    BuyCom
+  },
  
     data(){
       return{
-        totalPrice: 0
+        totalPrice: 0,
+        total: 0
       }
 
     },
@@ -58,6 +64,7 @@
     this.totalPrice = this.items.reduce((total, item) => {
       return total + (item.cartprice * item.cartquantity);
     }, 0);
+    this.total = this.totalPrice
   },
 
     }
