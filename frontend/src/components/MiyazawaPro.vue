@@ -3,7 +3,7 @@
     <div style="display: flex; align-items: center; height: 50vh; flex-direction: column;">
       <div style="display: flex; align-items: center;">
         <img src="/assets/miyazawa.png" alt="画像" style="width: 150px; height: 150px;">
-        <h1 style="margin-left: 10px;">Miyazawa<br>recommended Protein  tomoko</h1>
+        <h1 style="margin-left: 10px;">Miyazawa<br>recommended Protein  tomomin</h1>
       </div>
       <div>
         <div v-for="fav in favs" :key="fav.id">

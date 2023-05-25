@@ -39,24 +39,30 @@ export default {
     items() {
       return store.state.cart;
     },
-  },
-  methods: {
-    remove(id) {
-      store.commit("delete", id);
-      this.$router.go({ path: this.$router.currentRoute.path, force: true });
-    },
-    refreshquantity(value, name) {
-      let sub = {
-        value: value,
-        name: name,
-      };
-      store.commit("refreshquantity", sub);
-      this.calculateTotalPrice();
-    },
-    calculateTotalPrice() {
-      // Calculate the total price of items in the cart
-      // ...
-    },
+    mounted() {
+  this.calculateTotalPrice();
+},
+    methods:{
+      remove(id){
+        store.commit('delete', id)
+        this.$router.go({ path: this.$router.currentRoute.path, force: true })
+      
+      },
+      refreshquantity(value,name){
+        let sub ={
+          value:value,
+          name:name
+        }
+        // const value =document.getElementById('name').value
+        // alert(sub.value + sub.name)
+        store.commit('refreshquantity', sub)
+        this.calculateTotalPrice();
+      },
+      calculateTotalPrice() {
+    this.totalPrice = this.items.reduce((total, item) => {
+      return total + (item.cartprice * item.cartquantity);
+    }, 0);
+    this.total = this.totalPrice
   },
 };
 </script>
