@@ -22,7 +22,7 @@
     </div>
 
     <h1>{{ "購入金額 :" + totalPrice + "yen" }}</h1>
-    <button>購入</button>
+    <a href="mailto:kaihatsu.tomoki.miyazawa@gmail.com?subject=購入完了のお知らせ" @click="mail">購入</a>
     <br>
     <hr>
     <br>
@@ -101,6 +101,9 @@ export default {
       }
       store.commit('saveCoupon', coupon)
       console.log("母は")
+    },
+    mail(){
+      confirm("購入を完了しますか？　完了後購入内容をメールにて送信します")
     }
 
   }
