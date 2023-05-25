@@ -75,7 +75,7 @@
             <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
             <router-view></router-view>
         </div>
-       
+
     </div>
 </template>
   
@@ -184,20 +184,20 @@ export default {
             }
             store.commit('saveCart', cart)
             alert("押したよ❤️")
+        }
+
+    },
+    computed: {
+        total() {
+            if (this.items && this.items.length > 0 && this.quantity) {
+
+                const totalPrice = this.items[0].price * this.quantity;
+                return totalPrice.toLocaleString(); // 桁区切りの表示
+
+            }
+            return "0";
         },
-        computed: {
-            total() {
-                if (this.items && this.items.length > 0 && this.quantity) {
-                    const selectedItem = this.items.find(item => item.id === this.$route.params.id);
-                    if (selectedItem && selectedItem.price) {
-                        const totalPrice = selectedItem.price * this.quantity;
-                        return totalPrice.toLocaleString(); // 桁区切りの表示
-                    }
-                }
-                return "0";
-            },
-        },
-    }
+    },
 };
 </script>
 
