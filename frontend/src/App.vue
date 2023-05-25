@@ -280,7 +280,7 @@ body {
   position: fixed;
   left: 20;
   top: 40%;
-  transform: translateY(-190%);
+  transform: translateY(-130%);
   font-family: 'Caveat', cursive;
 }
 
