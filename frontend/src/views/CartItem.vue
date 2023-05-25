@@ -18,6 +18,7 @@
             </p>
             <p>{{ "Total price: " + (item.cartprice * item.cartquantity) + " yen" }}</p>
             <button @click="remove(item.id)">削除</button>
+            <BuyCom :propName="total" /> 
           </div>
         </div>
       </li>
@@ -27,12 +28,18 @@
 
 <script>
 import store from "../store/";
+import BuyCom from '@/components/Buy.vue'
 
 export default {
   name: "CartVue",
+    components: {
+    BuyCom
+  },
   data() {
     return {
       maxQuantity: 100, // 最大数量
+      totalPrice: 0,
+      total: 0
     };
   },
   computed: {
@@ -40,6 +47,9 @@ export default {
       return store.state.cart;
     },
   },
+  mounted() {
+  this.calculateTotalPrice();
+},
   methods: {
     remove(id) {
       store.commit("delete", id);
@@ -54,8 +64,10 @@ export default {
       this.calculateTotalPrice();
     },
     calculateTotalPrice() {
-      // Calculate the total price of items in the cart
-      // ...
+      this.totalPrice = this.items.reduce((total, item) => {
+      return total + (item.cartprice * item.cartquantity);
+    }, 0);
+    this.total = this.totalPrice
     },
   },
 };

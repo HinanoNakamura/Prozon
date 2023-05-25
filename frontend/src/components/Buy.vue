@@ -33,6 +33,7 @@ export default {
 }
 
 .boxbox {
+    margin-top: 80px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
