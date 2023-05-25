@@ -85,6 +85,7 @@ class TestController {
 
     @GetMapping(path = "/users")
     public List<Testes> users() {
+        System.out.println("成功");
         return testService.findAllEntities();
     }
 

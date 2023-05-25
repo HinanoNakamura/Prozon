@@ -74,4 +74,5 @@ docker exec -it 7ca793a0e926 /bin/bash
 4.これでmysqlに入れる
 5.show databases;
 6.use mydatabase;
-7.mysql> show tables;
+7.mysql> show tables;# Prozon
+# Prozon

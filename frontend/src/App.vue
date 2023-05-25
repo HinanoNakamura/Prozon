@@ -1,30 +1,31 @@
 <template>
   <div class="app">
     <div class="slideshow">
-      <img v-for="(image, index) in images" v-show="index === currentImageIndex" :key="index" :src="image.src" :alt="image.alt" @click="goToURL(image.url)">
+      <img v-for="(image, index) in images" v-show="index === currentImageIndex" :key="index" :src="image.src"
+        :alt="image.alt" @click="goToURL(image.url)">
     </div>
 
     <div class="buttonchan">
-    <button  class="button-74" @click="prevImage">←</button>
-    <button  class="button-74" @click="nextImage">→</button>
+      <button class="button-74" @click="prevImage">←</button>
+      <button class="button-74" @click="nextImage">→</button>
     </div>
     <div>
       <router-link v-if="false" to="/">Home</router-link>
       <router-view></router-view>
     </div>
 
-   
+
 
     <div class="unko">
-  <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
-</div>
+      <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
+    </div>
 
     <div class="flavor-selector2">
       <router-link to="/search-results" class="search-link">
         <img src="./assets/image.png" alt="検索アイコン" class="search-icon">
       </router-link>
-      
- <router-link to="/cart" class="cart-link">
+
+      <router-link to="/cart" class="cart-link">
         <img src="./assets/cart.png" alt="カートアイコン" class="cart-icon" style="width: 47px; height: 47px;">
       </router-link>
 
@@ -33,17 +34,44 @@
       <router-link v-if="loggin" to="/favorites">Favorite</router-link>
       <router-link v-else to="login">Favorite</router-link>
     </div>
+
+    <!-- <ul class="coupon" v-for="fav in favs" :key="fav.id">
+        <h1>{{ fav.id}}</h1>
+      </ul> -->
+      <button  @click="createcoupon()" v-bind:disabled="processing"><img src="./assets/coupon.png" alt="" ></button>
+    
+    <!-- クーポン用モーダルウィンドウ -->
+    <div v-if="isOpen" class="modal-overlay">
+      <div class="modal-content" v-for="fav in favs" :key="fav.id">
+        <div style="font-size: 14px; text-align: center; width: 50vw;">
+          <h2>今日のクーポン</h2>
+          <hr>
+          <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+          <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+          <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+
+          
+          <h1>{{ fav.name + "が" + fav.flavorcode + "0" + "%" + "OFFだよ"}}</h1>
+          <!-- <input v-on:change="setImage" type="file" name="image" accept="image/*">
+          <br><br> -->
+        </div>
+        <button @click="closeModal">閉じる</button>
+      </div>
+
+
+    </div>
   </div>
 </template>
 
 <script>
 import store from "./store/";
-
+import { Service } from "@/service/service";
 
 
 export default {
   data() {
     return {
+      isOpen: false,
       flavors: ['Strawberry', 'Mango', 'Melon', 'Cocoa', 'Matcha'],
       selectedFlavors: [],
       purposes: ['Diet', 'Muscle'],
@@ -79,7 +107,11 @@ export default {
       // スライドショーが自動的に移動するためのタイマーを追加します。
       timer: null,
       // スライドショーの遷移時間（ミリ秒）を追加します。
-      transitionDuration: 5000
+      transitionDuration: 5000,
+      favs: {},
+      processing: false,
+      couponname:'',
+      couponnumber:''
     }
   },
   computed: {
@@ -87,10 +119,10 @@ export default {
       return store.state.loggin
     }
   },
-  
+
   watch: {
     loggin(value) {
-      localStorage.setItem('loggin',value) // logginの値が変更された時にlocalStorageに保存するメソッドを呼び出す
+      localStorage.setItem('loggin', value) // logginの値が変更された時にlocalStorageに保存するメソッドを呼び出す
     },
   },
   mounted() {
@@ -108,49 +140,71 @@ export default {
   },
 
   methods: {
-  goToURL(url) {
-    window.location.href = url;
-  },
-  startSlideshow() {
-    if (this.timer) {
+    goToURL(url) {
+      window.location.href = url;
+    },
+    startSlideshow() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
+      this.timer = setInterval(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      }, this.transitionDuration);
+    },
+    stopSlideshow() {
       clearInterval(this.timer);
-    }
-    this.timer = setInterval(() => {
+    },
+    prevImage() {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+      this.stopSlideshow();
+      setTimeout(() => {
+        this.startSlideshow();
+      }, this.transitionDuration);
+    },
+    nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    }, this.transitionDuration);
-  },
-  stopSlideshow() {
-    clearInterval(this.timer);
-  },
-  prevImage() {
-    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
-    this.stopSlideshow();
-    setTimeout(() => {
-      this.startSlideshow();
-    }, this.transitionDuration);
-  },
-  nextImage() {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    this.stopSlideshow();
-    setTimeout(() => {
-      this.startSlideshow();
-    }, this.transitionDuration);
-  },
-  changeTransitionDuration(duration) {
-    this.transitionDuration = duration;
-    this.stopSlideshow();
-    this.timer = setInterval(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    }, this.transitionDuration);
-  },
-  // checkLoginStatus() {
-  //   if (localStorage.getItem('loggin')) {
-  //     store.commit('SETID', localStorage.getItem('userId'));
-  //     store.commit('SETLOG', true);
-  //   }
-  // },
+      this.stopSlideshow();
+      setTimeout(() => {
+        this.startSlideshow();
+      }, this.transitionDuration);
+    },
+    changeTransitionDuration(duration) {
+      this.transitionDuration = duration;
+      this.stopSlideshow();
+      this.timer = setInterval(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      }, this.transitionDuration);
+    },
+    createcoupon() {
+      Service.get('/users').then(response => {
+        this.favs = response.data;
+        this.couponname = response.data[0].name;
+        this.couponnumber = response.data[0].flavorcode + "0"
+        console.log(this.couponname)
 
-}
+        let coupon ={
+        couponname:this.couponname,
+        couponnumber:this.couponnumber
+      }
+      store.commit('saveCoupon',coupon)
+
+      });
+     
+      this.isOpen = true;
+      this.processing = true
+      
+    },
+    closeModal() {
+      this.isOpen = false;
+      console.log(store.state.coupon.couponnumber)
+    }
+    // checkLoginStatus() {
+    //   if (localStorage.getItem('loggin')) {
+    //     store.commit('SETID', localStorage.getItem('userId'));
+    //     store.commit('SETLOG', true);
+    //   }
+    // },
+  }
 }
 </script>
 
