@@ -1,6 +1,9 @@
 <template>
   <div class="home1">
-    <HelloWorld msg="Welcome to Proteinworld" />
+    <p style="font-size: 40px;">"Welcome to Proteinworld" </p> 
+    <button class="overlay" :disabled="processing" style="background-color: transparent; border: none; padding:0;width: 50px; height: 50px;" @click="createcoupon">
+  <img src="/assets/coupon-removebg-preview.png" alt="">
+</button>
 
     <div class="flexbox">
       <div class="flexitem">
@@ -10,10 +13,6 @@
       <div class="flexitem">
         <img src="/assets/1682565705747.jpg" alt="バナー02です"><router-link to="/about2">Protein<br>ranking</router-link>
       </div>
-      <button :disabled="processing" style="background-color: transparent; border: none; padding: 0;width: 50px; height: 50px;" @click="createcoupon">
-  <img src="/assets/coupon.png" alt="">
-</button>
-
 
 <!-- クーポン用モーダルウィンドウ -->
 <div v-if="isOpen" class="modal-overlay">
@@ -39,14 +38,10 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 import { Service } from "@/service/service"
 import store from "../store/";
 export default {
   name: 'ProteinMain',
-  components: {
-    HelloWorld
-  },
   data() {
     return{
     favs: {},
@@ -179,4 +174,12 @@ export default {
 .home1 {
   text-align: center;
   font-family: 'Caveat', cursive;
-}</style>
+}
+
+.overlay{
+  position: absolute;
+  top: 42%;
+  left: 71%;
+  transform: translate(-50%, -50%);
+}
+</style>
