@@ -33,53 +33,30 @@
       <router-link v-else to="/page">MyPage</router-link>
       <router-link v-if="loggin" to="/favorites">Favorite</router-link>
       <router-link v-else to="login">Favorite</router-link>
-    </div>
-
-    <!-- <ul class="coupon" v-for="fav in favs" :key="fav.id">
-        <h1>{{ fav.id}}</h1>
-      </ul> -->
-      <button  @click="createcoupon()" v-bind:disabled="processing"><img src="./assets/coupon.png" alt="" ></button>
-    
-    <!-- クーポン用モーダルウィンドウ -->
-    <div v-if="isOpen" class="modal-overlay">
-      <div class="modal-content" v-for="fav in favs" :key="fav.id">
-        <div style="font-size: 14px; text-align: center; width: 50vw;">
-          <h2>今日のクーポン</h2>
+<br>
+      <div class="coupon-container">
+        <div style="font-size: 8px; text-align: center; width: 10vw;">
+          <h2>My Coupon</h2>
           <hr>
-          <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
-          <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
-          <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
-
-          
-          <h1>{{ fav.name + "が" + fav.flavorcode + "0" + "%" + "OFFだよ"}}</h1>
-          <!-- <input v-on:change="setImage" type="file" name="image" accept="image/*">
-          <br><br> -->
+          <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <h2>{{ ponname + " " + ponnumber + "%OFF" }}</h2>
         </div>
-        <button @click="closeModal">閉じる</button>
       </div>
-
-
     </div>
+
   </div>
 </template>
 
 <script>
 import store from "./store/";
-import { Service } from "@/service/service";
-
 
 export default {
   data() {
     return {
-      isOpen: false,
-      flavors: ['Strawberry', 'Mango', 'Melon', 'Cocoa', 'Matcha'],
-      selectedFlavors: [],
-      purposes: ['Diet', 'Muscle'],
-      selectedPurposes: [],
-      components: ['Whey', 'Soy', 'Casein'],
-      selectedComponents: [],
-      prices: ['~¥2,000', '¥2,001~¥3,000', '¥3,001~'],
-      selectedPrices: [],
+      ponname: store.state.coupon.couponname,
+      ponnumber: store.state.coupon.couponnumber,
       // 画像リストを追加します。
       images: [
         {
@@ -108,10 +85,6 @@ export default {
       timer: null,
       // スライドショーの遷移時間（ミリ秒）を追加します。
       transitionDuration: 5000,
-      favs: {},
-      processing: false,
-      couponname:'',
-      couponnumber:''
     }
   },
   computed: {
@@ -174,83 +147,10 @@ export default {
       this.timer = setInterval(() => {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, this.transitionDuration);
-    },
-    createcoupon() {
-      Service.get('/users').then(response => {
-        this.favs = response.data;
-        this.couponname = response.data[0].name;
-        this.couponnumber = response.data[0].flavorcode + "0"
-        console.log(this.couponname)
-
-        let coupon ={
-        couponname:this.couponname,
-        couponnumber:this.couponnumber
-      }
-      store.commit('saveCoupon',coupon)
-
-      });
-     
-      this.isOpen = true;
-      this.processing = true
-      
-    },
-    closeModal() {
-      this.isOpen = false;
-      console.log(store.state.coupon.couponnumber)
-    }
-    // checkLoginStatus() {
-    //   if (localStorage.getItem('loggin')) {
-    //     store.commit('SETID', localStorage.getItem('userId'));
-    //     store.commit('SETLOG', true);
-    //   }
-    // },
-  }
-}
-</script>
-
-<!-- 
-<script>
-import store from "./store/";
-
-export default {
-
-  data() {
-    return {
-      flavors: ['Strawberry', 'Mango', 'Melon', 'Cocoa', 'Matcha'],
-      selectedFlavors: [],
-      purposes: ['Diet', 'Muscle'],
-      selectedPurposes: [],
-      components: ['Whey', 'Soy', 'Casein'],
-      selectedComponents: [],
-      prices: ['~¥2,000', '¥2,001~¥3,000', '¥3,001~'],
-      selectedPrices: []
-    }
-  },
-  computed: {
-    loggin() {
-      return store.state.loggin
-    }
-
-  },
-//   created() {
-//   this.$store.dispatch('checkAuth');
-// },
-
-  watch: {
-    loggin(value) {
-      localStorage.setItem('loggin', value)
-    }
-  },
-  mounted() {
-    if (localStorage.getItem('loggin')) {
-      store.commit('SETID', localStorage.getItem('userId'));
-      store.commit('SETLOG', true);
     }
   }
 }
 </script>
- -->
-
 
 
 <style>
@@ -320,9 +220,10 @@ body {
   font-size: 1.3rem;
   position: fixed;
   left: 0;
-  top: 30%;
+  top: 26%;
   transform: translateY(-180%);
 }
+
 
 .flavor-selector2 {
   margin-top: 20px;
@@ -333,8 +234,8 @@ body {
   font-size: 1.3rem;
   position: fixed;
   left: 20;
-  top: 40%;
-  transform: translateY(-190%);
+  top: 60%;
+  transform: translateY(-130%);
   font-family: 'Caveat', cursive;
 }
 
@@ -375,6 +276,15 @@ body {
 .button-74:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
+}
+.coupon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(106, 94, 75);
+  border-radius: 3px;
 }
 </style>
 

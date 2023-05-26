@@ -6,7 +6,7 @@
                 <div class="line-container">
                     <hr class="line" />
                 </div>
-                <h1>¥{{ propName | formatCurrency }} <button class="button-53">Use Coupon</button></h1>
+                <h1>¥{{ propName | formatCurrency }} <button class="button-53" @click="useCoupon">Use Coupon</button></h1>
                
             </div>
         </div>
@@ -24,6 +24,11 @@ export default {
         formatCurrency(value) {
             return value.toLocaleString();
         }
+    },
+    methods:{
+        useCoupon(){
+            this.$emit('button-click');
+        }
     }
 }
 </script>
@@ -31,20 +36,23 @@ export default {
 <style scoped>
 .custom-position {
     position: absolute;
-    top: 70%;
-    left: 70%;
+    top: 85%;
+    left: 65%;
     transform: translate(-50%, -50%);
 }
 
 .boxbox {
+    margin-top: 80px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 400px;
+    width: 350px;
     height: 200px;
     background-color: rgb(246, 246, 246);
     color: rgb(0, 0, 0);
     border-radius: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
     position: relative;
 }
 
@@ -56,12 +64,12 @@ export default {
 }
 
 h1 {
-    font-size: 40px;
+    font-size: 35px;
     text-align: left;
 }
 
 .line-container {
-    width: 80%;
+    width: 100%;
 }
 
 .line {
@@ -81,7 +89,7 @@ h1 {
     vertical-align: middle;
     position: absolute;
     top: -55px;
-    left: 120px;
+    left: 150px;
 
     margin-right: 40px;
     margin-left: 40px;

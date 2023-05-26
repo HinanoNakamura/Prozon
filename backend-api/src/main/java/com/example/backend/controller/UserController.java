@@ -65,7 +65,7 @@ class UserController {
     
             // アイコンを保存する処理
             try {
-                Path path = Paths.get("/Users/hinano_nakamura/Desktop/perfect/frontend/public/assets/profileimg/" + name);
+                Path path = Paths.get("/Users/aikainagaki/Desktop/perfect/frontend/public/assets/profileimg/" + name);
                 Files.write(path, file.getBytes());
             } catch (IOException e) {
                 // アイコン保存エラーの場合の処理
@@ -165,7 +165,7 @@ class UserController {
             LocalDateTime nowDate = LocalDateTime.now();
             DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
             String formatNowDate = dtf3.format(nowDate);
-            Path dest = Paths.get("/Users/hinano_nakamura/Desktop/perfect/frontend/public/assets/profileimg/" + formatNowDate  + fileName);
+            Path dest = Paths.get("/Users/aikainagaki/Desktop/perfect/frontend/public/assets/profileimg/" + formatNowDate  + fileName);
             Files.write(dest, profileImageFile.getBytes(), StandardOpenOption.CREATE);
             
             String imagePath = "/assets/profileimg/" + formatNowDate + fileName;

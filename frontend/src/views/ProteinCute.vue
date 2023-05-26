@@ -2,7 +2,7 @@
   <div class="Protein recommendations for dogs">
     <div class="font">
       <div class="flexwan">
-        <h1>★Employee recommended protein★</h1>
+        <h1>★Employee recommended</h1>
         <div class="spacer"></div>
         <div class="testesprotein">
           <div class="column">
@@ -86,8 +86,8 @@ body {
 .testesprotein {
   display: flex;
   justify-content: flex-start; /* 左寄せに変更 */
-  margin-left: -30px; /* 追加：左の余白を調整 */
-  margin-right: -30px; /* 追加：右の余白を調整 */
+  margin-left: 30px; /* 追加：左の余白を調整 */
+  margin-right: 30px; /* 追加：右の余白を調整 */
 }
 
 .column {
