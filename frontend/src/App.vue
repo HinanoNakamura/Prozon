@@ -17,7 +17,7 @@
 
 
     <div class="unko">
-      <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
+      <img src="./assets/usako2.png" alt="画像" style="width: 150px; height: 150px;">
     </div>
 
     <div class="flavor-selector2">
@@ -232,7 +232,7 @@ body {
   position: fixed;
   left: 0;
   top: 26%;
-  transform: translateY(-180%);
+  transform: translateY(-160%);
 }
 
 
