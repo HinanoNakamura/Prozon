@@ -107,7 +107,7 @@ export default new Vuex.Store({
     },
     saveCoupon(state,coupon){
 
-      state.coupon=coupon
+      Vue.set(state,'coupon',coupon);
       
       const extra = state.cart.findIndex(extra=> extra.cartname === state.coupon.couponname)
       if(extra !== -1){

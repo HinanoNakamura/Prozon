@@ -36,12 +36,18 @@
 <br>
       <div class="coupon-container">
         <div style="font-size: 8px; text-align: center; width: 10vw;">
+          <div v-if="loggin">
           <h2>My Coupon</h2>
           <hr>
           <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
           <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
           <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
-          <h2>{{ ponname + " " + ponnumber + "%OFF" }}</h2>
+          <h2>{{ ponname}} {{  ponnumber }}%OFF </h2>
+        </div>
+        <div v-else>
+          <h2>You can play coupon gacha</h2>
+            <h2>when you log in!</h2>
+        </div>
         </div>
       </div>
     </div>
