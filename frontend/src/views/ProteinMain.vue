@@ -178,7 +178,7 @@ export default {
 
 .overlay{
   position: absolute;
-  top: 43%;
+  top: 40%;
   left: 78.5%;
   transform: translate(-50%, -50%);
 }
