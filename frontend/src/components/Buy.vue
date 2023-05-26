@@ -34,6 +34,7 @@ export default {
 </script>
   
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 .custom-position {
     position: absolute;
     top: 85%;
@@ -110,6 +111,7 @@ h1 {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    font-family: 'Caveat', cursive;
 }
 
 .button-53:focus {

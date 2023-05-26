@@ -1,27 +1,6 @@
 <template>
-  <div>
-    <div class="home">
-
-
-<!-- クーポン用モーダルウィンドウ -->
-<div v-if="isOpen" class="modal-overlay">
-  <div class="modal-content">
-    <div style="font-size: 14px; text-align: center; width: 50vw;">
-      <h2>今日のクーポン</h2>
-      <hr>
-      <img src="../assets/image1.png" alt="" style="width: 150px; height: 150px;">
-      <img src="../assets/image2.png" alt="" style="width: 150px; height: 150px;">
-      <img src="../assets/image3.png" alt="" style="width: 150px; height: 150px;">
-      <h1>{{ couponname + " が " + couponnumber + " % " + " 引き " }}</h1>
-    </div>
-    <button @click="closeModal">閉じる</button>
-    <button @click="useCoupon">クーポンを使用する</button>
-  </div>
-</div>
-</div>
   <div class="cart">
     <h1 class="cart-title">Cart 🛒</h1>
-<hr>
     <ul class="cart-detail">
       <li v-for="item in items" :key="item.id">
         <div class="item-container">
@@ -37,48 +16,43 @@
                 <option v-for="quantity in maxQuantity" :key="quantity" :value="quantity" :selected="quantity === item.cartquantity">{{ quantity }}</option>
               </select>
             </p>
-            <p>{{ "Total price: " + (item.cartprice * item.cartquantity) + " yen" }}</p>
-            <button @click="remove(item.id)">削除</button>
-            <BuyCom :propName="total" @button-click="useCoupon"/> 
+            <p>{{ "Total price: ¥" + (item.cartprice * item.cartquantity).toLocaleString() }}</p>
+            <button @click="remove(item.id)">Delete</button>
+            <BuyCom :propName="total" /> 
           </div>
         </div>
       </li>
     </ul>
+    <p v-if="items.length === 0" style= "font-family: 'Caveat', cursive; font-size:30px;">No item</p>
+    <div class="back-home">
+            <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
+            <router-view></router-view>
+        </div>
   </div>
- 
-</div>
-
 </template>
 
 <script>
 import store from "../store/";
 import BuyCom from '@/components/Buy.vue'
-  
-  export default {
-    name: 'CartVue',
+
+export default {
+  name: "CartVue",
     components: {
     BuyCom
   },
- 
-    data(){
-      return{
-        isOpen: false,
-        maxQuantity: 100,
-        totalPrice: 0,
-        couponname: store.state.coupon.couponname,
-      couponnumber: store.state.coupon.couponnumber,
-      processing: false,
-        total: 0
-      }
-
+  data() {
+    return {
+      maxQuantity: 100, // 最大数量
+      totalPrice: 0,
+      total: 0
+    };
+  },
+  computed: {
+    items() {
+      return store.state.cart;
     },
-
-    computed:{
-      items(){
-        return store.state.cart
-      }
-    },
-    mounted() {
+  },
+  mounted() {
   this.calculateTotalPrice();
 },
   methods: {
@@ -86,6 +60,9 @@ import BuyCom from '@/components/Buy.vue'
       store.commit("delete", id);
       this.$router.go({ path: this.$router.currentRoute.path, force: true });
     },
+    goBack() {
+            window.history.back();
+        },
     refreshquantity(value, name) {
       let sub = {
         value: value,
@@ -99,28 +76,16 @@ import BuyCom from '@/components/Buy.vue'
       return total + (item.cartprice * item.cartquantity);
     }, 0);
     this.total = this.totalPrice
-  },createcoupon() {
-      this.isOpen = true;
-      
     },
-    closeModal() {
-      this.isOpen = false;
-      
-    },
-    useCoupon() {
-      let coupon = {
-        couponname: this.couponname,
-        couponnumber: this.couponnumber
-      }
-      store.commit('saveCoupon', coupon),
-      this.processing = true
-    }
+  },
+};
+</script>
 
-    }
-  };
-  </script>
-
+  
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+
 ul {
   margin: 0;
   padding: 0;
@@ -134,6 +99,7 @@ li {
 
 .cart {
   text-align: center;
+  font-family: 'Caveat', cursive;
 }
 
 .cart-title {

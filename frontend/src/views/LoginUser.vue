@@ -70,7 +70,6 @@ export default {
           .catch(error => {
             this.loginMsg = 'wrong😩';
             console.log(error);
-            alert(this.username + this.password)
           });
       }
     }

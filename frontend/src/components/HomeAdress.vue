@@ -93,7 +93,7 @@ export default {
         })
         .then((data) => {
           if (data.status === 400) { //エラー時
-            error.textContent = "Please enter the correct format";
+            error.textContent = "Enter the correct";
           } else if (data.results === null) {
             error.textContent = 'Address not found from zip code.';
           } else {

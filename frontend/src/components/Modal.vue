@@ -30,7 +30,10 @@
             <br>
           </div>
         </div>
-        <button @click="closeModal">completion</button>
+
+        <button v-if="imgSrc !==''" @click="closeModalWithImage">completion</button>
+        <br><br>
+        <button @click="closeModalWithoutImage">back</button>
       </div>
     </div>
   </div>
@@ -58,10 +61,18 @@ export default {
     openModal() {
       this.isOpen = true;
     },
-    closeModal() {
+    closeModalWithImage() {
       const croppedImage = this.$refs.cropper.getCroppedCanvas().toDataURL();
-      this.$emit('imageCropped', croppedImage);
+        this.$emit('imageCropped', croppedImage)
+        this.closeModal();
+    },
+    closeModalWithoutImage() {
+      this.closeModal();
+    },
+    closeModal() {
       this.isOpen = false;
+      this.imgSrc = '';
+      this.cropImg = '';
     },
     setImage(e) {
       const file = e.target.files[0];

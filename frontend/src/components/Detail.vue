@@ -24,6 +24,8 @@
                     </div>
                     <div>Total: ¥{{ total }}</div>
                     <PopupWindow ref="popup"></PopupWindow>
+                    <PopupCart ref="pop"></PopupCart>
+                    
 
 
                 </div>
@@ -86,12 +88,14 @@
 import { Service } from "@/service/service";
 import store from "../store/";
 import PopupWindow from './/PopupWindow';
+import PopupCart from './/PopupCart';
 
 export default {
 
     name: "DetailPage",
     components: {
-        PopupWindow
+        PopupWindow,
+        PopupCart
     },
     props: {
         title: String,
@@ -176,6 +180,7 @@ export default {
             this.$router.go({ path: this.$router.currentRoute.path, force: true })
         },
         saveCart() {
+            this.$refs.pop.showPopup('Added to cart');
             let cart = {
                 cartname: this.cartname,
                 cartprice: this.cartprice,
@@ -183,7 +188,6 @@ export default {
                 cartquantity: this.quantity
             }
             store.commit('saveCart', cart)
-            alert("押したよ❤️")
         }
 
     },

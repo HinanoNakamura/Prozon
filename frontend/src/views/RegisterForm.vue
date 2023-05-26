@@ -22,14 +22,18 @@
       <span v-if="password !== passwordConfirm" style="color: red;">Passwords do not match</span>
       <br>
       <label for="mail">Mailaddress : </label>
-      <input type="email" id="mail" v-model="mail" placeholder="aika@ria.com">
+      <input type="text" id="mail" v-model="mail" placeholder="aika@ria.com" @blur="handleEmailBlur">
+      <br>
+     <span v-if="isError" style="color: red;">{{ mailerrorMessage }}</span>
       <br><br>
       <label for="homenumber">Postal Code : 〒</label>
-      <input type="tel" maxlength="3" size="4" id="homenumber1" v-model="homenumber1">
+      <input type="text" maxlength="3" size="4" id="homenumber1" v-model="homenumber1" @blur="handlehomenumberBlur1">
       <span>- </span>
-      <input type="tel" maxlength="4" size="5" id="homenumber2" v-model="homenumber2">
+      <input type="tel" maxlength="4" size="5" id="homenumber2" v-model="homenumber2" @blur="handlehomenumberBlur2">
       <button id="search" class="button-74" type="button" @click="search">Search</button>
       <p id="error" style="color:#e0548e;"></p>
+      <span v-if="isError" style="color: red;">{{ homeerrorMessage }}</span>
+      <br>
       <label for="homeaddress">Address : </label>
       <input type="text" size="40" id="homeaddress" v-model="homeaddress" value="">
       <br><br>
@@ -41,15 +45,16 @@
       <!-- <img v-if="profileImageFile" :src="path" style="border-radius: 50%; height: 200px; width: 200px;" /> -->
       <br><br>
       <button :disabled="!isFormValid || isDataEmpty()"  type="button" @click="registerUser">registration</button>
-
-    </form>
-    
-   
-
+      <br>
+      <br>
     <div class="back-home">
       <button v-if="$route.path !== '/'" class="button-74" @click="$router.push('/')">Home</button>
       <router-view></router-view>
     </div>
+    </form>
+    
+   
+
 
 
   </div>
@@ -84,10 +89,51 @@ export default {
       croppedImage: '',
       croppedsrc:'',
       isError: false,
-      errorMessage: ''
+      errorMessage: '',
+      mailerrorMessage:'',
+      homeerrorMessage:''
     };
   },
   methods: {
+    handleEmailBlur() {
+  if (this.mail !== '' && !this.validateEmail(this.mail)) {
+    this.mailerrorMessage = 'Invalid email address';
+    this.isError = true;
+  } else {
+    this.mailerrorMessage = '';
+    this.isError = false;
+  }
+},
+    validateEmail(email) {
+      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      return emailRegex.test(email);
+    },
+    handlehomenumberBlur1() {
+  if (!this.validatehomenumber1(this.homenumber1)) {
+    this.homeerrorMessage = 'Invalid Home address';
+    this.isError = true;
+  }  else {
+    this.homeerrorMessage = '';
+    this.isError = false;
+  }
+},
+handlehomenumberBlur2() {
+    if (!this.validatehomenumber2(this.homenumber2)) {
+    this.homeerrorMessage = 'Invalid Home address';
+    this.isError = true;
+  } else {
+    this.homeerrorMessage = '';
+    this.isError = false;
+  }
+},
+    validatehomenumber1(homenumber1) {
+      const homenumber1Regex = /^\d+$/;
+      return homenumber1Regex.test(homenumber1);
+    },
+     validatehomenumber2(homenumber2) {
+      const homenumber2Regex = /^\d+$/;
+      return homenumber2Regex.test(homenumber2);
+    },
     handleProfileImageUpload(event) {
       this.profileImageFile = event.target.files[0];
       this.path = URL.createObjectURL(this.profileImageFile);
@@ -115,8 +161,7 @@ export default {
           console.log(response);
           store.commit('SETID', this.username);
           store.commit('SETLOG', true)
-          alert(store.state.loggin)
-          alert(store.state.userId)
+          alert('登録完了')
           this.$router.push('/');
         })
         .catch((error) => {
@@ -152,7 +197,7 @@ export default {
         })
         .then((data) => {
           if (data.status === 400) { //エラー時
-            error.textContent = 'dame';
+            error.textContent = 'Enter the correct';
           } else if (data.results === null) {
             error.textContent = 'Address not found from zip code.';
           } else {
