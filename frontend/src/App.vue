@@ -65,22 +65,22 @@ export default {
       // 画像リストを追加します。
       images: [
         {
-          src: '/assets/d.jpg',
+          src: '/assets/400.jpg',
           alt: '画像1',
           url: '/Prodoc'
         },
         {
-          src: '/assets/w.jpg',
+          src: '/assets/w400_2.jpg',
           alt: '画像2',
           url: '/Prowoman'
         },
         {
-          src: '/assets/man.jpg',
+          src: '/assets/mans.jpg',
           alt: '画像3',
           url: '/ProMan'
         },
         {
-          src: '/assets/2.png',
+          src: '/assets/womanmans.jpg',
           alt: '画像4',
           url: '/Procute'
         }
@@ -245,7 +245,7 @@ body {
   font-size: 1.3rem;
   position: fixed;
   left: 20;
-  top: 60%;
+  top: 68%;
   transform: translateY(-130%);
   font-family: 'Caveat', cursive;
 }

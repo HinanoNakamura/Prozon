@@ -23,7 +23,7 @@
         </div>
       </li>
     </ul>
-    <p v-if="items.length === 0" style= "font-family: 'Caveat', cursive; font-size:30px;">No item</p>r
+    <p v-if="items.length === 0" style= "font-family: 'Caveat', cursive; font-size:30px;">No item</p>
     <div class="back-home">
             <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
             <router-view></router-view>
