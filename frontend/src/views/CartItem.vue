@@ -18,7 +18,7 @@
             </p>
             <p>{{ "Total price: ¥" + (item.cartprice * item.cartquantity).toLocaleString() }}</p>
             <button @click="remove(item.id)">Delete</button>
-            <BuyCom :propName="total" /> 
+            <BuyCom :propName="total" @button-click="useCoupon" /> 
           </div>
         </div>
       </li>
@@ -44,7 +44,9 @@ export default {
     return {
       maxQuantity: 100, // 最大数量
       totalPrice: 0,
-      total: 0
+      total: 0,
+      couponname: store.state.coupon.couponname,
+      couponnumber: store.state.coupon.couponnumber,
     };
   },
   computed: {
@@ -77,6 +79,15 @@ export default {
     }, 0);
     this.total = this.totalPrice
     },
+    useCoupon() {
+      alert('あ')
+      let coupon = {
+        couponname: this.couponname,
+        couponnumber: this.couponnumber
+      }
+      store.commit('saveCoupon', coupon)
+      console.log("母は")
+    }
   },
 };
 </script>

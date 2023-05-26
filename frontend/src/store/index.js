@@ -26,9 +26,6 @@ export default new Vuex.Store({
     },
     setLoggin(context, value) {
       context.commit('SETLOG', value);
-      if (!value) {
-        context.commit('clearCart');
-      }
     },
     checkAuth({ commit }) {
       const userId = localStorage.getItem('userId');
@@ -122,9 +119,6 @@ export default new Vuex.Store({
       console.log("母母" +  state.cart[extra].cartprice )
       }
  
-    },
-    clearCart(state) {
-      state.cart = [];
     },
 
     
