@@ -14,6 +14,7 @@
             ¥{{ fav.price.toLocaleString() }}
             <img :src="'./assets' + fav.img" alt="Image" style="width: 160px; height: 160px;" @click="MoreDetail" />
 
+            <h3>コスパがいいのに味がすごく美味しい！沢山飲みたい人には特におすすめだよ🎵</h3>
             <h2>
               <router-link :to="{name:'detail',params:{ id: 110}}">
                 <button @click="saveId" class="button-74">Detail</button>

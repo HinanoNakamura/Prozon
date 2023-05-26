@@ -143,9 +143,9 @@ export default {
 .flavor-selector {
   position: fixed;
   left: 0; 
-  top: 38%; 
+  top: 50%; 
   width: 200px; 
-  height: 62vh; 
+  height: 50vh; 
   overflow-y: auto;
 }
 

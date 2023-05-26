@@ -1,23 +1,24 @@
 <template>
   <div class="app">
     <div class="slideshow">
-      <img v-for="(image, index) in images" v-show="index === currentImageIndex" :key="index" :src="image.src" :alt="image.alt" @click="goToURL(image.url)">
+      <img v-for="(image, index) in images" v-show="index === currentImageIndex" :key="index" :src="image.src"
+        :alt="image.alt" @click="goToURL(image.url)">
     </div>
 
     <div class="buttonchan">
-    <button  class="button-74" @click="prevImage">←</button>
-    <button  class="button-74" @click="nextImage">→</button>
+      <button class="button-74" @click="prevImage">←</button>
+      <button class="button-74" @click="nextImage">→</button>
     </div>
     <div>
       <router-link v-if="false" to="/">Home</router-link>
       <router-view></router-view>
     </div>
 
-   
+
 
     <div class="unko">
-  <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
-</div>
+      <img src="./assets/unnko.jpg" alt="画像" style="width: 150px; height: 150px;">
+    </div>
 
     <div class="flavor-selector2">
       <router-link to="/search-results" class="search-link">
@@ -33,26 +34,30 @@
       <router-link v-else to="/page">MyPage</router-link>
       <router-link v-if="loggin" to="/favorites">Favorite</router-link>
       <router-link v-else to="login">Favorite</router-link>
+<br>
+      <div class="coupon-container">
+        <div style="font-size: 8px; text-align: center; width: 10vw;">
+          <h2>My Coupon</h2>
+          <hr>
+          <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
+          <h2>{{ ponname + " " + ponnumber + "%OFF" }}</h2>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import store from "./store/";
 
-
-
 export default {
   data() {
     return {
-      flavors: ['Strawberry', 'Mango', 'Melon', 'Cocoa', 'Matcha'],
-      selectedFlavors: [],
-      purposes: ['Diet', 'Muscle'],
-      selectedPurposes: [],
-      components: ['Whey', 'Soy', 'Casein'],
-      selectedComponents: [],
-      prices: ['~¥2,000', '¥2,001~¥3,000', '¥3,001~'],
-      selectedPrices: [],
+      ponname: store.state.coupon.couponname,
+      ponnumber: store.state.coupon.couponnumber,
       // 画像リストを追加します。
       images: [
         {
@@ -80,7 +85,7 @@ export default {
       // スライドショーが自動的に移動するためのタイマーを追加します。
       timer: null,
       // スライドショーの遷移時間（ミリ秒）を追加します。
-      transitionDuration: 5000
+      transitionDuration: 5000,
     }
   },
   computed: {
@@ -88,10 +93,10 @@ export default {
       return store.state.loggin
     }
   },
-  
+
   watch: {
     loggin(value) {
-      localStorage.setItem('loggin',value) // logginの値が変更された時にlocalStorageに保存するメソッドを呼び出す
+      localStorage.setItem('loggin', value) // logginの値が変更された時にlocalStorageに保存するメソッドを呼び出す
     },
   },
   mounted() {
@@ -109,95 +114,44 @@ export default {
   },
 
   methods: {
-  goToURL(url) {
-    window.location.href = url;
-  },
-  startSlideshow() {
-    if (this.timer) {
+    goToURL(url) {
+      window.location.href = url;
+    },
+    startSlideshow() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
+      this.timer = setInterval(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      }, this.transitionDuration);
+    },
+    stopSlideshow() {
       clearInterval(this.timer);
-    }
-    this.timer = setInterval(() => {
+    },
+    prevImage() {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+      this.stopSlideshow();
+      setTimeout(() => {
+        this.startSlideshow();
+      }, this.transitionDuration);
+    },
+    nextImage() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    }, this.transitionDuration);
-  },
-  stopSlideshow() {
-    clearInterval(this.timer);
-  },
-  prevImage() {
-    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
-    this.stopSlideshow();
-    setTimeout(() => {
-      this.startSlideshow();
-    }, this.transitionDuration);
-  },
-  nextImage() {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    this.stopSlideshow();
-    setTimeout(() => {
-      this.startSlideshow();
-    }, this.transitionDuration);
-  },
-  changeTransitionDuration(duration) {
-    this.transitionDuration = duration;
-    this.stopSlideshow();
-    this.timer = setInterval(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    }, this.transitionDuration);
-  },
-  // checkLoginStatus() {
-  //   if (localStorage.getItem('loggin')) {
-  //     store.commit('SETID', localStorage.getItem('userId'));
-  //     store.commit('SETLOG', true);
-  //   }
-  // },
-
-}
-}
-</script>
-
-<!-- 
-<script>
-import store from "./store/";
-
-export default {
-
-  data() {
-    return {
-      flavors: ['Strawberry', 'Mango', 'Melon', 'Cocoa', 'Matcha'],
-      selectedFlavors: [],
-      purposes: ['Diet', 'Muscle'],
-      selectedPurposes: [],
-      components: ['Whey', 'Soy', 'Casein'],
-      selectedComponents: [],
-      prices: ['~¥2,000', '¥2,001~¥3,000', '¥3,001~'],
-      selectedPrices: []
-    }
-  },
-  computed: {
-    loggin() {
-      return store.state.loggin
-    }
-
-  },
-//   created() {
-//   this.$store.dispatch('checkAuth');
-// },
-
-  watch: {
-    loggin(value) {
-      localStorage.setItem('loggin', value)
-    }
-  },
-  mounted() {
-    if (localStorage.getItem('loggin')) {
-      store.commit('SETID', localStorage.getItem('userId'));
-      store.commit('SETLOG', true);
+      this.stopSlideshow();
+      setTimeout(() => {
+        this.startSlideshow();
+      }, this.transitionDuration);
+    },
+    changeTransitionDuration(duration) {
+      this.transitionDuration = duration;
+      this.stopSlideshow();
+      this.timer = setInterval(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      }, this.transitionDuration);
     }
   }
 }
 </script>
- -->
-
 
 
 <style>
@@ -267,9 +221,10 @@ body {
   font-size: 1.3rem;
   position: fixed;
   left: 0;
-  top: 30%;
+  top: 26%;
   transform: translateY(-180%);
 }
+
 
 .flavor-selector2 {
   margin-top: 20px;
@@ -280,7 +235,7 @@ body {
   font-size: 1.3rem;
   position: fixed;
   left: 20;
-  top: 40%;
+  top: 60%;
   transform: translateY(-130%);
   font-family: 'Caveat', cursive;
 }
@@ -322,6 +277,15 @@ body {
 .button-74:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
+}
+.coupon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(106, 94, 75);
+  border-radius: 3px;
 }
 </style>
 
