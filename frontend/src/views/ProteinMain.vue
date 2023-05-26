@@ -10,7 +10,7 @@
       <div class="flexitem">
         <img src="/assets/1682565705747.jpg" alt="バナー02です"><router-link to="/about2">Protein<br>ranking</router-link>
       </div>
-      <button :disabled="processing" style="background-color: transparent; border: none; padding: 0;width: 50px; height: 50px;" @click="createcoupon">
+      <button class="overlay" :disabled="processing" style="background-color: transparent; border: none; padding: 0;width: 50px; height: 50px;" @click="createcoupon">
   <img src="/assets/coupon.png" alt="">
 </button>
 
@@ -179,4 +179,11 @@ export default {
 .home1 {
   text-align: center;
   font-family: 'Caveat', cursive;
-}</style>
+}
+.overlay{
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+}
+</style>
