@@ -62,8 +62,6 @@ import store from "./store/";
 export default {
   data() {
     return {
-      ponname: store.state.coupon.couponname,
-      ponnumber: store.state.coupon.couponnumber,
       // 画像リストを追加します。
       images: [
         {
@@ -95,6 +93,8 @@ export default {
     }
   },
   computed: {
+    ponname: store.state.coupon.couponname,
+    ponnumber: store.state.coupon.couponnumber,
     loggin() {
       return store.state.loggin
     }
