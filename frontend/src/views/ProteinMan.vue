@@ -12,7 +12,7 @@
                   ★{{ item.name }}★<br>
                   ¥{{ item.price.toLocaleString() }}
                   <img :src="'./assets' + item.img" style="width: 200px; height: 200px; display: block; margin: 0 auto;" alt="Image" class="item-image">
-                  <router-link :to="{ name: 'detail', params: { id: item.id } }" class="button-74">Detail</router-link>
+                  <router-link :to="{ name: 'detail', params: { id: item.id } }"><button @click="saveId(item.id)"  class="button-74">Detail</button></router-link>
                 </div>
               </li>
             </ul>
@@ -28,6 +28,7 @@
   
   <script>
   import { Service } from "@/service/service";
+  import store from "../store/"
   export default {
     name: "RecommendationItem",
     props: {
@@ -45,6 +46,12 @@
         this.items = response.data;
       });
     },
+
+    methods:{
+      saveId(id){
+      store.commit('setId', id)
+    }
+    }
   };
   </script>
   
@@ -87,7 +94,7 @@
     display: flex;
     justify-content: flex-start; /* 左寄せに修正 */
     flex-wrap: wrap;
-    gap: 100px;
+    gap: 180px;
     list-style: none;
     margin-left: 120px;
   }

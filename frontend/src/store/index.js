@@ -37,6 +37,7 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit('SETID', '');
       commit('SETLOG', false);
+      commit('deletecart');
       localStorage.removeItem('userId');
       localStorage.removeItem('loggin');
     },
@@ -64,6 +65,7 @@ export default new Vuex.Store({
     },
     LOGOUT(state) {
       state.userId = '';
+      state.cart = [];
       state.isLoggedIn = false;
       localStorage.removeItem('userId');
       localStorage.removeItem('loggin');

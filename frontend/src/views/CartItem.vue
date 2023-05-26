@@ -23,6 +23,11 @@
         </div>
       </li>
     </ul>
+    <p v-if="items.length === 0" style= "font-family: 'Caveat', cursive; font-size:30px;">No item</p>r
+    <div class="back-home">
+            <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
+            <router-view></router-view>
+        </div>
   </div>
 </template>
 
@@ -55,6 +60,9 @@ export default {
       store.commit("delete", id);
       this.$router.go({ path: this.$router.currentRoute.path, force: true });
     },
+    goBack() {
+            window.history.back();
+        },
     refreshquantity(value, name) {
       let sub = {
         value: value,

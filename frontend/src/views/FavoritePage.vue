@@ -2,7 +2,7 @@
   <div>
     <form>
       <div>
-        <h4 style="font-family: 'Caveat', cursive;">Favorite items</h4>
+        <h4 style="font-family: 'Caveat', cursive; font-size: 50px;">Favorite items</h4>
       </div>
     </form>
     <div class="testes-wrapper2">
@@ -23,10 +23,11 @@
           </div>
         </div>
       </ul>
-
     </div>
     <br>
     <div class="back-home">
+      <p v-if="items.length === 0" style="font-size: 30px;">noitem</p>
+      <br><br>
       <button class="button-74" v-if="$route.path !== '/'" @click="$router.push('/')">Home</button>
       <router-view></router-view>
     </div>
