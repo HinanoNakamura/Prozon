@@ -37,12 +37,18 @@
 <br>
       <div class="coupon-container">
         <div style="font-size: 8px; text-align: center; width: 10vw;">
+          <div v-if="loggin">
           <h2>My Coupon</h2>
           <hr>
-          <img src="./assets/image1.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
-          <img src="./assets/image2.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
-          <img src="./assets/image3.png" alt="" @click="createcoupon()" style="width: 45px; height: 45px;">
-          <h2>{{ ponname + " " + ponnumber + "%OFF" }}</h2>
+          <img src="./assets/image1.png" alt=""  style="width: 45px; height: 45px;">
+          <img src="./assets/image2.png" alt=""  style="width: 45px; height: 45px;">
+          <img src="./assets/image3.png" alt=""  style="width: 45px; height: 45px;">
+          <h2>{{ ponname}} {{  ponnumber }}%OFF </h2>
+        </div>
+        <div v-else>
+          <h2>You can play coupon gacha</h2>
+            <h2>when you log in!</h2>
+        </div>
         </div>
       </div>
     </div>
@@ -56,8 +62,6 @@ import store from "./store/";
 export default {
   data() {
     return {
-      ponname: store.state.coupon.couponname,
-      ponnumber: store.state.coupon.couponnumber,
       // 画像リストを追加します。
       images: [
         {
@@ -91,6 +95,12 @@ export default {
   computed: {
     loggin() {
       return store.state.loggin
+    },
+    ponname() {
+      return store.state.coupon.couponname;
+    },
+    ponnumber() {
+      return store.state.coupon.couponnumber;
     }
   },
 
