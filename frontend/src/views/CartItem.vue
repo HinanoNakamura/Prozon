@@ -87,6 +87,7 @@ export default {
       }
       store.commit('saveCoupon', coupon)
       console.log("母は")
+      this.calculateTotalPrice();
     }
   },
 };

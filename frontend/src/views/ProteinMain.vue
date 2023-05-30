@@ -5,6 +5,7 @@
   <img src="/assets/coupon-removebg-preview.png" alt="">
 </button>
 
+
     <div class="flexbox">
       <div class="flexitem">
         <img src="/assets/1682565705747.jpg" alt="バナー01です"><router-link to="/about">Recommended gacha</router-link>
