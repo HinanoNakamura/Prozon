@@ -80,13 +80,11 @@ export default {
     this.total = this.totalPrice
     },
     useCoupon() {
-      alert('あ')
       let coupon = {
         couponname: this.couponname,
         couponnumber: this.couponnumber
       }
       store.commit('saveCoupon', coupon)
-      console.log("母は")
       this.calculateTotalPrice();
     }
   },
