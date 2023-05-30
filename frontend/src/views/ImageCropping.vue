@@ -1,6 +1,6 @@
 <template>
   <div style="font-size: 14px; text-align: center; width: 100vw;">
-    <h2>画像のトリミング</h2>
+    <h2>画像トリミング</h2>
     <hr>
     <h3>画像を選択</h3>
     <input @change="setImage" type="file" name="image" accept="image/*">
