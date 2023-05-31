@@ -9,25 +9,33 @@
           </div>
           <div class="item-text">
             <h2>{{ item.cartname }}</h2>
-            <p>{{ "Price: ¥" + item.cartprice.toLocaleString() }}</p>
+            <template v-if="item.cartname === couponname && judge === true">
+              {{ "Price : ¥" + originalPrice.toLocaleString() }}
+            </template>
+            <template v-else>
+              <p>{{ "Price: ¥" + item.cartprice.toLocaleString() }}</p>
+            </template>
+
             <p class="quantity-text">
               Quantity:
               <select v-model="item.cartquantity" @change="refreshquantity(item.cartquantity, item.cartname)">
-                <option v-for="quantity in maxQuantity" :key="quantity" :value="quantity" :selected="quantity === item.cartquantity">{{ quantity }}</option>
+                <option v-for="quantity in maxQuantity" :key="quantity" :value="quantity"
+                  :selected="quantity === item.cartquantity">{{ quantity }}</option>
               </select>
             </p>
+
             <p>{{ "Total price: ¥" + (item.cartprice * item.cartquantity).toLocaleString() }}</p>
             <button @click="remove(item.id)">Delete</button>
-            <BuyCom :propName="total" @button-click="useCoupon" /> 
+            <BuyCom :propName="total" @button-click="useCoupon" />
           </div>
         </div>
       </li>
     </ul>
-    <p v-if="items.length === 0" style= "font-family: 'Caveat', cursive; font-size:30px;">No item</p>
+    <p v-if="items.length === 0" style="font-family: 'Caveat', cursive; font-size:30px;">No item</p>
     <div class="back-home">
-            <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
-            <router-view></router-view>
-        </div>
+      <button class="button-74" v-if="$route.path !== '/'" @click="goBack">back</button>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -37,7 +45,7 @@ import BuyCom from '@/components/Buy.vue'
 
 export default {
   name: "CartVue",
-    components: {
+  components: {
     BuyCom
   },
   data() {
@@ -47,6 +55,8 @@ export default {
       total: 0,
       couponname: store.state.coupon.couponname,
       couponnumber: store.state.coupon.couponnumber,
+      originalPrice: store.state.originalPrice,
+      judge: false,
     };
   },
   computed: {
@@ -55,16 +65,16 @@ export default {
     },
   },
   mounted() {
-  this.calculateTotalPrice();
-},
+    this.calculateTotalPrice();
+  },
   methods: {
     remove(id) {
       store.commit("delete", id);
       this.$router.go({ path: this.$router.currentRoute.path, force: true });
     },
     goBack() {
-            window.history.back();
-        },
+      window.history.back();
+    },
     refreshquantity(value, name) {
       let sub = {
         value: value,
@@ -75,19 +85,20 @@ export default {
     },
     calculateTotalPrice() {
       this.totalPrice = this.items.reduce((total, item) => {
-      return total + (item.cartprice * item.cartquantity);
-    }, 0);
-    this.total = this.totalPrice
+        return total + (item.cartprice * item.cartquantity);
+      }, 0);
+      this.total = this.totalPrice
     },
     useCoupon() {
-      let coupon = {
-        couponname: this.couponname,
-        couponnumber: this.couponnumber
-      }
-      store.commit('saveCoupon', coupon)
-      this.calculateTotalPrice();
-    }
-  },
+      this.processing = true,
+      this.judge = true;
+      store.commit("useCoupon")
+      console.log(store.state.coupon.couponname + "ストアにあるクーポンの名前")
+      console.log("eieieieie" + store.state.originalPrice)
+      this.originalPrice = store.state.originalPrice
+      this.calculateTotalPrice()
+    },
+  }
 };
 </script>
 

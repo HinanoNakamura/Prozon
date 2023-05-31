@@ -13,8 +13,8 @@ export default new Vuex.Store({
     id:'',
     detailId:'',
     count:'',
-    coupon:[]
-
+    coupon:[],
+    originalPrice:''
   },
   plugins: [createPersistedState(
     {paths :[
@@ -119,6 +119,22 @@ export default new Vuex.Store({
       console.log("母母" +  state.cart[extra].cartprice )
       }
  
+    },
+    useCoupon(state){
+      
+      const extra = state.cart.findIndex(extra=> extra.cartname === state.coupon.couponname)
+      
+      if(extra !== -1){
+        console.log("うんち" +extra )
+        const times = 1 - state.coupon.couponnumber/100
+        //値引き前の値段を一旦避難させる
+        state.originalPrice = state.cart[extra].cartprice
+        //クーポン対象の商品があった時、その商品の値段だけを割引後の価格に更新する。
+        state.cart[extra].cartprice = state.cart[extra].cartprice * times
+      
+     
+      console.log("母母" +  state.originalPrice + '/' + state.cart[extra].cartprice)
+      }
     },
 
     

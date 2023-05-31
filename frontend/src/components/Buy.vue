@@ -6,7 +6,7 @@
                 <div class="line-container">
                     <hr class="line" />
                 </div>
-                <h1>¥{{ propName | formatCurrency }} <button class="button-53" @click="useCoupon">Use Coupon</button></h1>
+                <h1>¥{{ propName | formatCurrency }} <button class="button-53" @click="useCoupon" v-bind:disabled="processing">Use Coupon</button></h1>
                
             </div>
         </div>
@@ -25,9 +25,15 @@ export default {
             return value.toLocaleString();
         }
     },
+    data(){
+        return {
+            processing: false,
+        }
+    },
     methods:{
         useCoupon(){
             this.$emit('button-click');
+            this.processing = true
         }
     }
 }
@@ -37,7 +43,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 .custom-position {
     position: absolute;
-    top: 85%;
+    top: 72%;
     left: 65%;
     transform: translate(-50%, -50%);
 }
