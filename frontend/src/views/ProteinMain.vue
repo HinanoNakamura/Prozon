@@ -1,9 +1,12 @@
 <template>
   <div class="home1">
-    <p style="font-size: 40px;">"Welcome to Proteinworld" </p> 
-    <button class="overlay" :disabled="processing" style="background-color: transparent; border: none; padding:0;width: 50px; height: 50px;" @click="createcoupon">
-  <img src="/assets/coupon-removebg-preview.png" alt="">
-</button>
+    <p style="font-size: 40px;">"Welcome to Proteinworld" </p>
+    <div v-if="loggin">
+      <button class="overlay" :disabled="processing"
+        style="background-color: transparent; border: none; padding:0;width: 50px; height: 50px;" @click="createcoupon">
+        <img src="/assets/coupon-removebg-preview.png" alt="">
+      </button>
+    </div>
 
 
     <div class="flexbox">
@@ -15,24 +18,24 @@
         <img src="/assets/1682565705747.jpg" alt="バナー02です"><router-link to="/about2">Protein<br>ranking</router-link>
       </div>
 
-<!-- クーポン用モーダルウィンドウ -->
-<div v-if="isOpen" class="modal-overlay">
-  <div class="modal-content" v-for="fav in favs" :key="fav.id">
-    <div style="font-size: 14px; text-align: center; width: 50vw;">
-      <h2>Today's Coupon</h2>
-      <hr>
-      <img src="/assets/image1.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
-      <img src="/assets/image2.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
-      <img src="/assets/image3.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+      <!-- クーポン用モーダルウィンドウ -->
+      <div v-if="isOpen" class="modal-overlay">
+        <div class="modal-content" v-for="fav in favs" :key="fav.id">
+          <div style="font-size: 14px; text-align: center; width: 50vw;">
+            <h2>Today's Coupon</h2>
+            <hr>
+            <img src="/assets/image1.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+            <img src="/assets/image2.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
+            <img src="/assets/image3.png" alt="" @click="createcoupon()" style="width: 150px; height: 150px;">
 
 
-      <h1>{{ fav.name + " " + fav.flavorcode + "0" + "%OFF" }}</h1>
-      <!-- <input v-on:change="setImage" type="file" name="image" accept="image/*">
+            <h1>{{ fav.name + " " + fav.flavorcode + "0" + "%OFF" }}</h1>
+            <!-- <input v-on:change="setImage" type="file" name="image" accept="image/*">
       <br><br> -->
-    </div>
-    <button @click="closeModal">Close</button>
-  </div>
-</div>
+          </div>
+          <button @click="closeModal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,15 +47,20 @@ import store from "../store/";
 export default {
   name: 'ProteinMain',
   data() {
-    return{
-    favs: {},
+    return {
+      favs: {},
       processing: false,
       couponname: '',
       couponnumber: '',
       isOpen: false,
-  }
+    }
   },
-  methods : {
+  computed: {
+    loggin() {
+      return store.state.loggin
+    },
+  },
+  methods: {
     createcoupon() {
       Service.get('/users').then(response => {
         this.favs = response.data;
@@ -177,7 +185,7 @@ export default {
   font-family: 'Caveat', cursive;
 }
 
-.overlay{
+.overlay {
   position: absolute;
   top: 40%;
   left: 78.5%;
